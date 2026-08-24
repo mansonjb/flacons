@@ -25,6 +25,7 @@
   ::selection { background: #C3CEC4; color: #22382E; }
   img { max-width: 100%; }
   html { scroll-behavior: smooth; }
+  section[id] { scroll-margin-top: 78px; }
 
   /* états de survol (repris des interactions de la maquette) */
   .nav-cta:hover { background: #D9E0D8 !important; color: #22382E !important; border-color: #D9E0D8 !important; }
@@ -36,9 +37,27 @@
   /* le gabarit reste calé sur 1440 px, sans jamais déborder */
   .page { width: 1440px; max-width: 100%; }
 
+  /* bouton burger : masqué au-dessus de 1100 px */
+  .burger { display: none; }
+
   @media (max-width: 1100px) {
-    .page header { position: static !important; padding: 16px 20px !important; flex-wrap: wrap; gap: 14px; justify-content: center; }
-    .page header nav { flex-wrap: wrap; justify-content: center; gap: 16px !important; }
+    .page header { padding: 14px 20px !important; flex-wrap: wrap; row-gap: 0; column-gap: 14px; justify-content: space-between; align-items: center; }
+    .page header > div:first-child { flex: 1; }
+    .burger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; align-items: flex-end; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .burger i { display: block; width: 26px; height: 1px; background: #D9E0D8; transition: transform .25s ease, opacity .2s ease; }
+    #nav-toggle:checked ~ .burger i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    #nav-toggle:checked ~ .burger i:nth-child(2) { opacity: 0; }
+    #nav-toggle:checked ~ .burger i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .page header nav, .page header .nav-cta { display: none !important; }
+    #nav-toggle:checked ~ nav {
+      display: flex !important; flex-direction: column; width: 100%; gap: 0 !important;
+      margin-top: 12px; border-top: 1px solid #3A5346;
+    }
+    #nav-toggle:checked ~ nav a { padding: 16px 0; border-bottom: 1px solid #2C4438; font-size: 12px; }
+    #nav-toggle:checked ~ .nav-cta {
+      display: block !important; width: 100%; box-sizing: border-box; text-align: center;
+      margin: 18px 0 6px; padding: 16px 22px !important; font-size: 11px !important;
+    }
     .page section, .page footer { padding-left: 20px !important; padding-right: 20px !important; }
     .page section { padding-top: 64px !important; padding-bottom: 64px !important; min-height: 0 !important; }
     .page section > div[style*="padding"] { padding: 0 !important; }
@@ -65,6 +84,8 @@
       <span style="font-size:22px;letter-spacing:0.16em;font-weight:300">FLACONS</span>
       <span style="font-size:8px;letter-spacing:0.34em;font-weight:400;opacity:.75">BAR À VIN</span>
     </div>
+    <input type="checkbox" id="nav-toggle" hidden>
+    <label class="burger" for="nav-toggle" aria-label="Ouvrir le menu"><i></i><i></i><i></i></label>
     <nav style="display:flex;gap:34px;font-size:11px;letter-spacing:0.18em;font-weight:400">
       <a href="#lieu">LE LIEU</a>
       <a href="#eux">BAPTISTE &amp; MANON</a>
@@ -343,6 +364,14 @@
     </div>
   </footer>
 </div>
+
+<script>
+  // referme le menu mobile après un clic sur une entrée
+  var navToggle = document.getElementById('nav-toggle');
+  document.querySelectorAll('header nav a, header .nav-cta').forEach(function (a) {
+    a.addEventListener('click', function () { navToggle.checked = false; });
+  });
+</script>
 
 <script type="application/ld+json">
 {
