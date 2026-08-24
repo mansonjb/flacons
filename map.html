@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flacons — plan</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<style>
+  html, body { margin: 0; height: 100%; background: #C3CEC4; }
+  #map { position: absolute; inset: 0; }
+  .leaflet-container { background: #C3CEC4; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  .leaflet-tile-pane { filter: grayscale(1) contrast(0.92) brightness(1.04) sepia(0.18) hue-rotate(60deg) saturate(0.7); }
+  .flacons-pin { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .flacons-pin span { background: #22382E; color: #EAEFE7; font-size: 10px; letter-spacing: 0.22em; padding: 7px 11px; white-space: nowrap; }
+  .flacons-pin i { width: 13px; height: 13px; background: #22382E; border: 3px solid #F4F2EC; border-radius: 50%; box-shadow: 0 1px 6px rgba(15,26,21,.4); }
+  .leaflet-control-attribution { background: rgba(244,242,236,.85) !important; font-size: 9px !important; }
+  .leaflet-bar a { color: #22382E !important; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+  var coords = [46.15934, -1.15010];
+  var map = L.map('map', { center: coords, zoom: 16, scrollWheelZoom: false });
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 19
+  }).addTo(map);
+  L.marker(coords, {
+    icon: L.divIcon({
+      className: '',
+      html: '<div class="flacons-pin"><span>FLACONS</span><i></i></div>',
+      iconSize: [110, 40],
+      iconAnchor: [55, 40]
+    })
+  }).addTo(map).bindPopup('<b>Flacons — bar à vin</b><br>8 rue de la Ferté, 17000 La Rochelle');
+</script>
+</body>
+</html>
